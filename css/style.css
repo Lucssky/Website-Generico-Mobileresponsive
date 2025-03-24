@@ -120,14 +120,8 @@ section .list .item:not(.active) {
 
 
 .setas {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
+  display: none;
 }
-
 .setas button{
   width: 40px;
   height: 40px;
