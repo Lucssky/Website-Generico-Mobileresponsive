@@ -38,3 +38,41 @@ prevButton.onclick =  ()=> {
   items[active].classList.add('active');
 }
 
+let startX = 0;
+let endX = 0;
+const listaItens = document.querySelector('.list');
+const itens = document.querySelectorAll('.list .item');
+let currentIndex = 0;
+
+document.addEventListener("DOMContentLoaded", () => {
+  listaItens.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  listaItens.addEventListener("touchmove", (e) => {
+    endX = e.touches[0].clientX;
+  });
+
+  listaItens.addEventListener("touchend", () => {
+    if (startX > endX + 50) {
+      nextSlide(); // Deslizou para a esquerda
+    } else if (startX < endX - 50) {
+      prevSlide(); // Deslizou para a direita
+    }
+  });
+
+  function nextSlide() {
+    itens[currentIndex].classList.remove("active");
+    currentIndex = (currentIndex + 1) % itens.length;
+    itens[currentIndex].classList.add("active");
+  }
+
+  function prevSlide() {
+    itens[currentIndex].classList.remove("active");
+    currentIndex = (currentIndex - 1 + itens.length) % itens.length;
+    itens[currentIndex].classList.add("active");
+  }
+});
+
+ 
+
