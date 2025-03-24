@@ -38,41 +38,61 @@ prevButton.onclick =  ()=> {
   items[active].classList.add('active');
 }
 
-let startX = 0;
-let endX = 0;
-const listaItens = document.querySelector('.list');
-const itens = document.querySelectorAll('.list .item');
-let currentIndex = 0;
 
-document.addEventListener("DOMContentLoaded", () => {
-  listaItens.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-  });
+  let startX = 0;
+  let endX = 0;
+  let currentIndex = 0;
+  const listaItens = document.querySelector(".list");
+  const itens = document.querySelectorAll(".list .item");
+  const indicadoress = document.querySelectorAll(".indicadores ul li");
 
-  listaItens.addEventListener("touchmove", (e) => {
-    endX = e.touches[0].clientX;
-  });
+  document.addEventListener("DOMContentLoaded", () => {
+    atualizarCarrossel();
 
-  listaItens.addEventListener("touchend", () => {
-    if (startX > endX + 50) {
-      nextSlide(); // Deslizou para a esquerda
-    } else if (startX < endX - 50) {
-      prevSlide(); // Deslizou para a direita
+    listaItens.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    listaItens.addEventListener("touchmove", (e) => {
+      endX = e.touches[0].clientX;
+    });
+
+    listaItens.addEventListener("touchend", () => {
+      if (startX > endX + 50) {
+        nextSlide();
+      } else if (startX < endX - 50) {
+        prevSlide();
+      }
+    });
+
+    listaItens.addEventListener("wheel", (e) => {
+      if (e.deltaY > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    });
+
+    function nextSlide() {
+      itens[currentIndex].classList.remove("active");
+      indicadoress[currentIndex].classList.remove("ativo");
+      currentIndex = (currentIndex + 1) % itens.length;
+      atualizarCarrossel();
+    }
+
+    function prevSlide() {
+      itens[currentIndex].classList.remove("active");
+      indicadoress[currentIndex].classList.remove("ativo");
+      currentIndex = (currentIndex - 1 + itens.length) % itens.length;
+      atualizarCarrossel();
+    }
+
+    function atualizarCarrossel() {
+      itens[currentIndex].classList.add("active");
+      indicadoress[currentIndex].classList.add("ativo");
     }
   });
 
-  function nextSlide() {
-    itens[currentIndex].classList.remove("active");
-    currentIndex = (currentIndex + 1) % itens.length;
-    itens[currentIndex].classList.add("active");
-  }
-
-  function prevSlide() {
-    itens[currentIndex].classList.remove("active");
-    currentIndex = (currentIndex - 1 + itens.length) % itens.length;
-    itens[currentIndex].classList.add("active");
-  }
-});
 
  
 
